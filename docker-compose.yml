@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+    neo4j:
+        image: 'neo4j:4.0'
+        ports:
+        - '7687:7687'
+        - '7474:7474'
+        env_file: 
+        - '.env'
+    bh:
+        build: ./bh
+        ports:
+            - 9000:80
+        volumes:
+        - './:/localdir'
+        - 'neo4j:/var/lib/neo4j/data'
+        depends_on: 
+        - "neo4j"
+        
+    # bhxpra:
+    #     build: ./BH-xpra
+    #     ports:
+    #         - 10000:10000
+    # bh2:
+    #     build: ./bh-neo
+    #     ports:
+    #         - 9001:80
+
+volumes:
+    neo4j:
